@@ -25,4 +25,8 @@ public class RatingManager {
             ratingList.get(player.hashCode()).addGame(game);
         }
     }
+
+    public boolean addPlayer(Player player){
+        ratingList.put(player.hashCode(),player);
+    }
 }

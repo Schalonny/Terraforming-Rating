@@ -51,13 +51,12 @@ public class ProgramControl {
             switch (option) {
                 case RATINGS:
                     showRatings();
-                    showAverageRating();
                     break;
                 case ADD_PLAYER:
                     addPlayer();
                     break;
                 case EDIT_PLAYER:
-                    editPlayer();
+                    // TODO
                     break;
                 case ADD_GAME:
                     addGame();
@@ -95,15 +94,15 @@ public class ProgramControl {
     }
 
     private void showGames() {
-        printer.printLine(gameManager.toString()); //TODO printer
+        printer.printLine(gameManager.toString());
     }
 
     private void addPlayer() {
         Player player = dataReader.readAndCreatePlayer(ratingList);
-        ratingList.addPlayer(player);
+        ratingManager.addPlayer(player);
     }
 
-    private void editPlayer() {
+/*    private void editPlayer() {
         String who = dataReader.readAndSearchByName();
         Player player = ratingList.players.get(who);
         printer.printLine("1 - imię, 2 - nazwisko, 3 - nick, 4 - ranking");
@@ -134,15 +133,6 @@ public class ProgramControl {
         }
     }
 
-    private void showAverageRating() {
-        double average = 0;
-        for (Player player : ratingList.players.values())
-            average += player.getRating();
-        average = average / ratingList.players.size();
-        printer.printLine("średni ranking to: " + average);
-    }
-
-
     private int getWhatToEdit() {
         int option = 0;
         boolean optionOk = false;
@@ -161,10 +151,11 @@ public class ProgramControl {
         }
         return option;
     }
+*/
 
     private void showRatings() {
         printer.printLine("Aktualna lista rankingowa :");
-        printer.printPlayers(
+        printer.printRatingList(
                 ratingManager.getRatingList());
         // komparator zwraca "+" jeśli to druga wartość jest większa, stąd sortowanie
         // będzie malejące
@@ -183,6 +174,10 @@ public class ProgramControl {
         dataReader.close();
     }
 
+
+
+
+
     private enum Option {  // prywatna klasa wewnętrzna
         EXIT(0, "wyjście z programu"),
         RATINGS(1, "pokaż tabelę rankingową"),
@@ -199,14 +194,6 @@ public class ProgramControl {
         Option(int value, String describe) {
             this.value = value;
             this.describe = describe;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public String getDescribe() {
-            return describe;
         }
 
         @Override
